@@ -31,6 +31,7 @@ alias ls='ls -F --group-directories-first --color'
 alias miloub='ssh milou-b'
 
 # PROMPT
+# Clone git-aware-prompt under $HOME/.bash from https://github.com/jimeh/git-aware-prompt
 export GITAWAREPROMPT=$HOME/.bash/git-aware-prompt
 source $GITAWAREPROMPT/main.sh
 export PS1="\u@\h \[$txtylw\]\w \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\]\$ "
