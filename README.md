@@ -3,16 +3,26 @@ dotfiles
 
 Config files for the various programs we use at SciLifeLab.
 
-Each of these files should go under your home directory and have a "." in front of them; so e.g. `tmux/mario.tmux.conf` would become `/home/mario/.tmux.conf` on UPPMAX or whichever other *nix environment.
 
-I would suggest you build your own config files, taking from these ones the pieces you like, but if you'd like to clone the repo and just use these you can type e.g.:
+Contribute Your Dotfiles!
+-------------------------
+
+We encourage contributions! If you'd like to contribute to the repo please fork it to your own github account and make a pull request from there. The general pattern is tool/user.configfilename. For example, Mario's `.tmux.conf` file is under `tmux/mario.tmux.conf`, and his .bashrc is under `/bash/mario.bashrc`.
+
+Usage
+-----
+
+Each of these files should go under your home directory and have a "." in front of them; so e.g. `tmux/mario.tmux.conf` would become `/home/mario/.tmux.conf` on UPPMAX or any other *nix environment.
+
+For the newly git initiated users out there, one way to pull all these files into your own user space would be:
 
 ```
 -bash-4.1$ git clone https://github.com/SciLifeLab/dotfiles.git ~
 -bash-4.1$ cp ~/dotfiles/tmux/mario.tmux.conf ~/.tmux.conf
 ```
 
-We encourage contributions and if you'd like to contribute to the repo please fork it to your own github account and make a pull request from there.
+Please see the very good resources listed on this page for more help with git and github: https://help.github.com/articles/what-are-other-good-resources-for-learning-git-and-github
+
 
 Additional Resources
 --------------------
