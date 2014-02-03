@@ -1,7 +1,7 @@
 dotfiles
 ========
 
-Config files for the various programs we use at scilifelab, grouped by directory.
+Config files for the various programs we use at SciLifeLab.
 
 Each of these files should go under your home directory and have a "." in front of them; so e.g. `tmux/mario.tmux.conf` would become `/home/mario/.tmux.conf` on UPPMAX or whichever other *nix environment.
 
