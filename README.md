@@ -34,4 +34,5 @@ _(feel free to add your own favorite tools to this list)_
   - HomeBrew (OS X): http://brew.sh/
   - BetterTouchTool (OS X): http://www.boastr.net/
   - Caffeine (OS X): http://lightheadsw.com/caffeine/
-
+  - iTerm 2 (OS X, free): http://iterm2.com/
+  - Spectacle (OS X, free): http://spectacleapp.com/
