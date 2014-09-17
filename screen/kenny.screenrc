@@ -1,0 +1,35 @@
+#caption always "%{Yk} %{W} %-w%{+b}%n %t%{-b}%+w"
+#
+#hardstatus alwayslastline "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%< %=%D %M %d %c"
+#hardstatus string '%{= kK}%-Lw%{= KW}%50>%n%f %t%{= kK}%+Lw%< %{=kG}%-= %d%M %c:%s%{-}'
+
+termcapinfo xterm ti@:te
+
+#hardstatus alwayslastline
+#hardstatus alwayslastline "%{= k}%{= b}$USER@%{B}%H %{= B}>>%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{= b}%l %{= B}<<%{= b} %d/%m %{B}%c"
+#hardstatus alwayslastline "%{= Kw} %{k}$USER@%{k}%H %= %{= Kk}%?%-Lw%?%{b Kw}%n*%f%t%?(%u)%?%{= Kk}%?%+Lw%?%?%= %{k}%l %{k} %{w}%d/%m %{b Kw}%c "
+#hardstatus alwayslastline "%{kY} %{+u kY}%n %t%{-u kY} %=[ %W ] "
+hardstatus alwayslastline '%{gk}[ %{G}%H %{g}][%= %{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}][%{Y}%l%{g}]%{=b C}[ %m/%d %c ]%{W}'
+#hardstatus alwayslastline '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}]'                                            
+term screen-256color
+
+# display messages on top of current window
+hardstatus off
+
+# replace C-A with the backtick
+escape ``
+
+# only show a message for 2 seconds
+msgwait 2
+
+# .. you never have enough scrollback
+defscrollback 100000
+# I know what to do already ;)
+startup_message off
+#shelltitle ''
+
+# Resize the current region. The space will be removed from or added to 
+# the region below or if there's not enough space from the region above.
+bind = resize =
+bind + resize +3
+bind - resize -3
