@@ -15,7 +15,7 @@ alias ll='ls -l'
 export HISTCONTROL=ignoredups:erasedups  # avoid duplicates..
 export HISTSIZE=100000                   # big big history
 export HISTFILESIZE=100000               # big big history
-shopt -s histappend 					 # append history entries..
+shopt -s histappend                      # append history entries..
 
 # vi vi vi
 set -o vi
