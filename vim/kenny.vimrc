@@ -1,3 +1,31 @@
+" set up Vundle
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" your plugins go here ...
+Plugin 'bling/vim-airline'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'scrooloose/syntastic'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+
+
+" vim-airline options
+let g:airline_powerline_fonts = 1 " it's sooo biutiful!
+let g:airline_theme='badwolf'
+let g:airline#extensions#tabline#enabled = 1
+
+
 set guioptions=afgimrT
 set guifont=Monospace\ 9
 set incsearch
@@ -20,13 +48,13 @@ set bdir=/home/kebil/tmp,/tmp " where to put backup file
 set directory=/home/kebil/tmp,/tmp " directory is the directory for swap file
 set lsp=0 " space it out a little more (easier to read)
 set wildmenu " turn on wild menu
-set ruler " Always show current positions along the bottom 
+set ruler " Always show current positions along the bottom
 set lz " do not redraw while running macros (much faster) (LazyRedraw)
 set hid " you can change buffer without saving
 "set backspace=2 " make backspace work normal
 set whichwrap+=<,>,h,l  " backspace and cursor keys wrap to
 set mouse=n " use mouse in normal mode (so we can still use *nix c/p in insert mode)
-set shortmess=atI " shortens messages to avoid 'press a key' prompt 
+set shortmess=atI " shortens messages to avoid 'press a key' prompt
 set report=0 " tell us when anything is changed via :...
 "set virtualedit=all " lets the cursor roam everywhere
 set showmode " show current mode
@@ -102,8 +130,8 @@ map <Leader>xml :set filetype=xml<CR>
   \:echo "XML mode is on"<CR>
 
 """" perl options
-au BufNewFile,BufRead *.t setfiletype perl 
-au BufNewFile,BufRead *.p? setfiletype perl 
+au BufNewFile,BufRead *.t setfiletype perl
+au BufNewFile,BufRead *.p? setfiletype perl
 au FileType perl set iskeyword+=: " make completion perl friendly
 au FileType perl compiler perl " Use perl compiler for all *.pl and *.pm files.
 let perl_fold=1 " fold all perl
@@ -116,7 +144,7 @@ au FileType perl map <S-F4> :!prove -r<CR>
 
 """" syntax hilighting for cake template files
 au BufNewFile,BufRead *.thtml setfiletype php
-au BufNewFile,BufRead *.ctp setfiletype php 
+au BufNewFile,BufRead *.ctp setfiletype php
 
 """" python options
 au BufNewFile,BufRead *.py setfiletype python
@@ -173,7 +201,7 @@ function! VisualHTMLTagWrap()
 exe "normal ".a:jumpright."l"
     endif
     exe "normal a</".a:tag.">"
-endfunction 
+endfunction
 
 fun! OpenPhpFunction (keyword)
     let proc_keyword = substitute(a:keyword , '_', '-', 'g')

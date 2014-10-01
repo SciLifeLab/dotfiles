@@ -26,3 +26,6 @@ export EDITOR=vim
 # some aliasses
 alias ls="ls --color"
 alias ll="ls -l"
+export PATH=$PWD/ensembl-git-tools/bin:$PATH
+export RLWRAP_EDITOR="vim +%L"
+

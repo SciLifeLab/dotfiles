@@ -21,3 +21,7 @@ shopt -s histappend                      # append history entries..
 set -o vi
 export EDITOR=vim
 
+
+export PATH=$PWD/ensembl-git-tools/bin:$PATH
+export RLWRAP_EDITOR="vim +%L"
+
