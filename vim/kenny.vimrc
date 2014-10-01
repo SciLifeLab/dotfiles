@@ -13,25 +13,29 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'bling/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/syntastic'
+Bundle 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Bundle 'honza/vim-snippets'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-
-
 
 " vim-airline options
 let g:airline_powerline_fonts = 1 " it's sooo biutiful!
 let g:airline_theme='badwolf'
 let g:airline#extensions#tabline#enabled = 1
 
+" ultisnips config
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
+set number
 set guioptions=afgimrT
 set guifont=Monospace\ 9
 set incsearch
-set nocompatible
 set fileformats=unix,dos,mac
-set number
 set visualbell vb
 set tabstop=4
 set shiftwidth=4
@@ -114,20 +118,6 @@ map <C-P> :bp!<CR>
 
 " ,e will open in the current working directory
 map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-
-" maximum height for the tabbar plugin
-let g:Tb_MaxSize = 0
-"let g:Tb_VSplit = 20 " vertical split width, uncomment for horizontal split
-command TbVertical let g:Tb_VSplit = 20|q|bn!
-command TbHorizontal let g:Tb_VSplit = 0|q|bn!
-
-" enable xml syntax folding (will slow down opening large xml files)
-map <Leader>xml :set filetype=xml<CR>
-  \:source /usr/share/vim/vim70/syntax/xml.vim<CR>
-  \:let g:xml_syntax_folding = 1<CR>
-  \:set foldmethod=syntax<CR>
-  \:source /usr/share/vim/vim70/syntax/syntax.vim<CR>
-  \:echo "XML mode is on"<CR>
 
 """" perl options
 au BufNewFile,BufRead *.t setfiletype perl
@@ -270,12 +260,8 @@ inoremap <Leader>} {}<esc>:let leavechar="}"<cr>i
 imap <m-l> <esc>:exec "normal f" . leavechar<cr>a
 imap <d-l> <esc>:exec "normal f" . leavechar<cr>a
 
-let g:snippetsEmu_key = "<C-Tab>"
+"let g:snippetsEmu_key = "<C-Tab>"
 
-"let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-"set list
-"set listchars=trail:,nbsp:,extends:$,precedes:<
-"
 let g:SaveUndoLevels = &undolevels
 let g:BufSizeThreshold = 1000000
 if has("autocmd")
