@@ -1,6 +1,6 @@
 " set up Vundle
-set nocompatible              " be iMproved, required
-filetype off                  " required
+set nocompatible              " be iMproved, required Vundle
+filetype off                  " required Vundle
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -13,23 +13,35 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'bling/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/syntastic'
+
+" Snippets are separated from ultisnips
 Bundle 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
 Bundle 'honza/vim-snippets'
 
+Plugin 'ervandew/supertab'
+Plugin 'vim-scripts/ZoomWin'
+Plugin 'kien/ctrlp.vim'
+Plugin 'sjl/gundo.vim'
+
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call vundle#end()            " required Vundle
+filetype plugin indent on    " required Vundle
 
 " vim-airline options
 let g:airline_powerline_fonts = 1 " it's sooo biutiful!
-let g:airline_theme='badwolf'
+let g:airline_theme='hybrid'
 let g:airline#extensions#tabline#enabled = 1
 
 " ultisnips config
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" remap ctrlp
+let g:ctrlp_map = '<c-l>'
+
+" map gundo tree to some fun key
+nnoremap <F8> :GundoToggle<CR>
 
 set number
 set guioptions=afgimrT
@@ -296,9 +308,6 @@ endfunction
 """" PHP option
 au FileType php,html map <Leader>h :call HTMLEncode()<CR>
 au FileType php,html map <Leader>H :call HTMLDecode()<CR>
-
-"""" visual representation of undo tree
-nnoremap <F8> :GundoToggle<CR>
 
 """" get a task list
 map <leader>T <Plug>TaskList
