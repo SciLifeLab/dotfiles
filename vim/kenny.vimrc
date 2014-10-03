@@ -15,8 +15,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/syntastic'
 
 " Snippets are separated from ultisnips
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 Plugin 'ervandew/supertab'
 Plugin 'vim-scripts/ZoomWin'
@@ -37,11 +37,16 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-" remap ctrlp
+" ctrlp options
 let g:ctrlp_map = '<c-l>'
 
-" map gundo tree to some fun key
+" gundo options
 nnoremap <F8> :GundoToggle<CR>
+set undofile
+set undolevels=100
+set undodir=/home/kebil/.vim/tmp/undo/
+
+
 
 set number
 set guioptions=afgimrT
@@ -312,7 +317,3 @@ au FileType php,html map <Leader>H :call HTMLDecode()<CR>
 """" get a task list
 map <leader>T <Plug>TaskList
 
-" tell it to use an undo file
-set undofile
-" set a directory to store the undo history
-set undodir=/home/kebil/.vimundo/
