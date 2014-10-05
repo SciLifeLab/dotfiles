@@ -1,9 +1,58 @@
+" set up Vundle
+set nocompatible              " be iMproved, required Vundle
+filetype off                  " required Vundle
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" your plugins go here ...
+Plugin 'bling/vim-airline'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'scrooloose/syntastic'
+
+" Snippets are separated from ultisnips
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
+Plugin 'ervandew/supertab'
+Plugin 'vim-scripts/ZoomWin'
+Plugin 'kien/ctrlp.vim'
+Plugin 'sjl/gundo.vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required Vundle
+filetype plugin indent on    " required Vundle
+
+" vim-airline options
+let g:airline_powerline_fonts = 1 " it's sooo biutiful!
+let g:airline_theme='hybrid'
+let g:airline#extensions#tabline#enabled = 1
+
+" ultisnips config
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" ctrlp options
+let g:ctrlp_map = '<c-l>'
+
+" gundo options
+nnoremap <F8> :GundoToggle<CR>
+set undofile
+set undolevels=100
+set undodir=/home/kebil/.vim/tmp/undo/
+
+
+
+set number
 set guioptions=afgimrT
 set guifont=Monospace\ 9
 set incsearch
-set nocompatible
 set fileformats=unix,dos,mac
-set number
 set visualbell vb
 set tabstop=4
 set shiftwidth=4
@@ -20,13 +69,13 @@ set bdir=/home/kebil/tmp,/tmp " where to put backup file
 set directory=/home/kebil/tmp,/tmp " directory is the directory for swap file
 set lsp=0 " space it out a little more (easier to read)
 set wildmenu " turn on wild menu
-set ruler " Always show current positions along the bottom 
+set ruler " Always show current positions along the bottom
 set lz " do not redraw while running macros (much faster) (LazyRedraw)
 set hid " you can change buffer without saving
 "set backspace=2 " make backspace work normal
 set whichwrap+=<,>,h,l  " backspace and cursor keys wrap to
 set mouse=n " use mouse in normal mode (so we can still use *nix c/p in insert mode)
-set shortmess=atI " shortens messages to avoid 'press a key' prompt 
+set shortmess=atI " shortens messages to avoid 'press a key' prompt
 set report=0 " tell us when anything is changed via :...
 "set virtualedit=all " lets the cursor roam everywhere
 set showmode " show current mode
@@ -87,23 +136,9 @@ map <C-P> :bp!<CR>
 " ,e will open in the current working directory
 map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
-" maximum height for the tabbar plugin
-let g:Tb_MaxSize = 0
-"let g:Tb_VSplit = 20 " vertical split width, uncomment for horizontal split
-command TbVertical let g:Tb_VSplit = 20|q|bn!
-command TbHorizontal let g:Tb_VSplit = 0|q|bn!
-
-" enable xml syntax folding (will slow down opening large xml files)
-map <Leader>xml :set filetype=xml<CR>
-  \:source /usr/share/vim/vim70/syntax/xml.vim<CR>
-  \:let g:xml_syntax_folding = 1<CR>
-  \:set foldmethod=syntax<CR>
-  \:source /usr/share/vim/vim70/syntax/syntax.vim<CR>
-  \:echo "XML mode is on"<CR>
-
 """" perl options
-au BufNewFile,BufRead *.t setfiletype perl 
-au BufNewFile,BufRead *.p? setfiletype perl 
+au BufNewFile,BufRead *.t setfiletype perl
+au BufNewFile,BufRead *.p? setfiletype perl
 au FileType perl set iskeyword+=: " make completion perl friendly
 au FileType perl compiler perl " Use perl compiler for all *.pl and *.pm files.
 let perl_fold=1 " fold all perl
@@ -116,7 +151,7 @@ au FileType perl map <S-F4> :!prove -r<CR>
 
 """" syntax hilighting for cake template files
 au BufNewFile,BufRead *.thtml setfiletype php
-au BufNewFile,BufRead *.ctp setfiletype php 
+au BufNewFile,BufRead *.ctp setfiletype php
 
 """" python options
 au BufNewFile,BufRead *.py setfiletype python
@@ -173,7 +208,7 @@ function! VisualHTMLTagWrap()
 exe "normal ".a:jumpright."l"
     endif
     exe "normal a</".a:tag.">"
-endfunction 
+endfunction
 
 fun! OpenPhpFunction (keyword)
     let proc_keyword = substitute(a:keyword , '_', '-', 'g')
@@ -242,12 +277,8 @@ inoremap <Leader>} {}<esc>:let leavechar="}"<cr>i
 imap <m-l> <esc>:exec "normal f" . leavechar<cr>a
 imap <d-l> <esc>:exec "normal f" . leavechar<cr>a
 
-let g:snippetsEmu_key = "<C-Tab>"
+"let g:snippetsEmu_key = "<C-Tab>"
 
-"let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-"set list
-"set listchars=trail:,nbsp:,extends:$,precedes:<
-"
 let g:SaveUndoLevels = &undolevels
 let g:BufSizeThreshold = 1000000
 if has("autocmd")
@@ -283,13 +314,6 @@ endfunction
 au FileType php,html map <Leader>h :call HTMLEncode()<CR>
 au FileType php,html map <Leader>H :call HTMLDecode()<CR>
 
-"""" visual representation of undo tree
-nnoremap <F8> :GundoToggle<CR>
-
 """" get a task list
 map <leader>T <Plug>TaskList
 
-" tell it to use an undo file
-set undofile
-" set a directory to store the undo history
-set undodir=/home/kebil/.vimundo/
