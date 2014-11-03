@@ -1,0 +1,185 @@
+#!/usr/bin/env bash
+#
+# DESCRIPTION:
+#
+#   Set the bash prompt according to:
+#    * the active conda environment
+#    * the branch/status of the current git repository
+#    * the return value of the previous command
+#
+# USAGE:
+#
+#   1. Save this file as ~/.bash_prompt
+#   2. Add the following line to the end of your ~/.bashrc or ~/.bash_profile:
+#        . ~/.bash_prompt
+#
+# LINEAGE:
+#
+#   Based on work by woods
+#
+#   https://gist.github.com/31967
+
+__powerline_mod() {
+
+  # Unicode symbols
+  PS_SYMBOL_DARWIN=''
+  PS_SYMBOL_LINUX='$'
+  PS_SYMBOL_OTHER='%'
+  GIT_BRANCH_SYMBOL='⑂ '
+  GIT_BRANCH_CHANGED_SYMBOL='+'
+  GIT_NEED_PUSH_SYMBOL='⇡'
+  GIT_NEED_PULL_SYMBOL='⇣'
+  ANACONDA_SYMBOL='⚭'
+  JOBS_SYMBOL='・'
+
+  # Solarized colorscheme
+  # Make sure all non-printable bytes in your PS1 are contained within \[ \].
+  # Otherwise, bash will count them in the length of the prompt. It uses the
+  # length of the prompt to determine when to wrap the line.
+  RESET="\[\e[m\]"
+  BOLD="\[\e[1m\]"
+
+  FG_BLACK="\[\e[30m\]"
+  FG_RED="\[\e[31m\]"
+  FG_GREEN="\[\e[32m\]"
+  FG_YELLOW="\[\e[33m\]"
+  FG_BLUE="\[\e[34m\]"
+  FG_MAGENTA="\[\e[35m\]"
+  FG_CYAN="\[\e[36m\]"
+  FG_WHITE="\[\e[37m\]"
+
+  BG_BLACK="\[\e[40m\]"
+  BG="\[\e[100m\]"
+  BG_RED="\[\e[41m\]"
+  BG_GREEN="\[\e[42m\]"
+  BG_YELLOW="\[\e[43m\]"
+  BG_BLUE="\[\e[44m\]"
+  BG_MAGENTA="\[\e[45m\]"
+  BG_CYAN="\[\e[46m\]"
+  BG_PAPER="\[\e[47m\]"
+  BG_ORANGE="\[\e[101m\]"
+  BG_DARK_GRAY="\[\e[102m\]"
+  BG_MEDIUM_GRAY="\[\e[104m\]"
+  BG_LIGHT_GRAY="\[\e[104m\]"
+  BG_BRIGHT_GRAY="\[\e[106m\]"
+  BG_VIOLET="\[\e[105m\]"
+  BG_WHITE="\[\e[107m\]"
+
+  # +--------------------------------------------------------------------+
+  # | Determine OS and what symbol to represent it.
+  # +--------------------------------------------------------------------+
+  case "$(uname)" in
+    Darwin)
+      PS_SYMBOL=${PS_SYMBOL_DARWIN}
+      ;;
+    Linux)
+      PS_SYMBOL=${PS_SYMBOL_LINUX}
+      ;;
+    *)
+      PS_SYMBOL=${PS_SYMBOL_OTHER}
+  esac
+
+  # +--------------------------------------------------------------------+
+  # | Determine active Conda environment details (Python).
+  # +--------------------------------------------------------------------+
+  conda_env_info() {
+    # Test if Conda env variable is set
+    if [ -n "$CONDA_DEFAULT_ENV" ] ; then
+      # This means we have an active Conda environment!
+      local conda_env=" ${ANACONDA_SYMBOL} ${CONDA_DEFAULT_ENV} "
+    else
+      # This means Conda environments are inactive (or non-existant)
+      local conda_env=""
+    fi
+
+    # print the Conda env segment without a trailing newline
+    printf "${conda_env}"
+  }
+
+  # +--------------------------------------------------------------------+
+  # | Determine if user is running as 'root'.
+  # +--------------------------------------------------------------------+
+  root_info() {
+    # Test for root
+    if [ $(id -u) -eq 0 ]; then
+      local username_format="$BOLD";
+    else
+      local username_format="";
+    fi
+
+    # Username and hostnames are simply: \u and \h
+    printf "${username_format}"
+  }
+
+  # +--------------------------------------------------------------------+
+  # | Determine info on possible Git repositories.
+  # +--------------------------------------------------------------------+
+  git_info() {
+    [ -x "$(which git)" ] || return    # no git command found
+
+    # get current branch name or short SHA1 hash for detached head
+    local branch="$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)"
+    [ -n "$branch" ] || return  # not a git branch
+
+    local marks
+
+    # branch is modified?
+    [ -n "$(git status --porcelain)" ] && marks+=" $GIT_BRANCH_CHANGED_SYMBOL"
+
+    # how many commits local branch is ahead/behind of remote?
+    # start with ahead
+    local branch_info=$(git branch -v | grep $branch)
+    if [[ $branch_info =~ ("[ahead "([[:digit:]]*)]) ]]; then
+      local ahead_n="${BASH_REMATCH[2]}"
+    fi
+
+    # continue with behind
+    if [[ $branch_info =~ ("[behind "([[:digit:]]*)]) ]]; then
+      local behind_n="${BASH_REMATCH[2]}"
+    fi
+
+    [ -n "$ahead_n" ] && marks+=" $GIT_NEED_PUSH_SYMBOL$ahead_n"
+    [ -n "$behind_n" ] && marks+=" $GIT_NEED_PULL_SYMBOL$behind_n"
+
+    # print the git branch segment without a trailing newline
+    printf " $GIT_BRANCH_SYMBOL$branch$marks "
+  }
+
+  jobs_info() {
+      JOBS=$(jobs | wc -l)
+      if [[ $JOBS > 0 ]]; then
+          printf "$BG_BLACK$FG_CYAN$JOBS_SYMBOL$RESET"
+      else
+          printf "$BG_BLACK  $RESET"
+      fi
+  }
+
+  ps1() {
+    # Check the exit code of the previous command and display different
+    # colors in the prompt accordingly.
+    if [ $? -eq 0 ]; then
+      local FG_EXIT="$FG_GREEN"
+    else
+      local FG_EXIT="$FG_RED"
+    fi
+
+    # Get hostname (until first '.') unless one of the defaults
+    PROMPT_HOSTNAME=" ${HOSTNAME%%.*} "
+
+    # Add the Conda environment infor
+    PS1="$BG_BLACK$FG_MAGENTA$(conda_env_info)$RESET"
+    PS1+="$(jobs_info)"
+    PS1+="$BG_BLACK$FG_RED$(root_info)\u$RESET"
+    PS1+="$BG_BLACK$FG_YELLOW$PROMPT_HOSTNAME$RESET"
+    # Add path to current working directory
+    PS1+="$BG_BLACK$FG_CYAN \w $RESET"
+    PS1+="$BG_BLACK$FG_BLUE$(git_info)$RESET\n"
+    PS1+="$BG_BLACK$FG_EXIT $PS_SYMBOL $RESET "
+  }
+
+  # Tell bash to execute this function just before displaying its prompt.
+  PROMPT_COMMAND=ps1
+}
+
+__powerline_mod
+unset __powerline_mod

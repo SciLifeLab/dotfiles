@@ -22,6 +22,8 @@ Plugin 'ervandew/supertab'
 Plugin 'vim-scripts/ZoomWin'
 Plugin 'kien/ctrlp.vim'
 Plugin 'sjl/gundo.vim'
+Plugin 'chrisbra/csv.vim'
+Plugin 'flazz/vim-colorschemes'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required Vundle
@@ -29,13 +31,15 @@ filetype plugin indent on    " required Vundle
 
 " vim-airline options
 let g:airline_powerline_fonts = 1 " it's sooo biutiful!
-let g:airline_theme='hybrid'
+"let g:airline_theme='hybrid'
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#branch#enabled = 1
 
 " ultisnips config
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:ultisnips_python_style="google"
 
 " ctrlp options
 let g:ctrlp_map = '<c-l>'
@@ -62,7 +66,7 @@ set shiftround
 set filetype=unix,dos,mac
 "set t_AB=[48;5;%dm " we control the background
 "set t_AF=[38;5;%dm " we control the foreground
-"set t_Co=256 " explicitely say it's a 256 color xterm TIP 1312
+set t_Co=256 " explicitely say it's a 256 color xterm TIP 1312
 set ls=2 " Always show status line
 set backup " make backup file
 set bdir=/home/kebil/tmp,/tmp " where to put backup file
@@ -105,16 +109,7 @@ set fileencodings=ucs-bom,utf-8,prc
 
 syntax on
 filetype indent on
-"filetype plugin on
-"filetype plugin indent on
 
-"colorscheme peachpuff
-"colorscheme desert
-"colorscheme torte
-"colorscheme darkblue
-colorscheme wombat256
-"colorscheme xoria256
-"
 " turn off the background so I can see my transparent background seeping through
 hi Normal ctermbg=none
 " make sure the folds are not so noticeable
@@ -157,7 +152,7 @@ au BufNewFile,BufRead *.ctp setfiletype php
 au BufNewFile,BufRead *.py setfiletype python
 "au FileType python compiler python " Use python compiler for all *.pl and *.pm files.
 au FileType python set foldmethod=indent
-au FileType python nmap <F5> :!python2 <C-R>=expand("%:p")<CR>
+au FileType python nmap <F5> :!python <C-R>=expand("%:p")<CR>
 au FileType python set makeprg=python2\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
 au FileType python set errorformat=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 "au FileType python set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
