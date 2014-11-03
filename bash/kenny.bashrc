@@ -40,8 +40,8 @@ source "$HOME/.bash_prompt"
 #source "$HOME/.git-completion.bash"
 
 # https://github.com/andsens/homeshick
-source $HOME/.homesick/repos/homeshick/homeshick.sh
+source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 
 # https://github.com/ingkebil/git-achievements
-export PATH="$PATH:~/git/git-achievements"
+export PATH="$PATH:$HOME/git/git-achievements"
 alias g="git-achievements"
