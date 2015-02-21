@@ -47,6 +47,7 @@ __powerline_mod() {
   FG_MAGENTA="\[\e[35m\]"
   FG_CYAN="\[\e[36m\]"
   FG_WHITE="\[\e[37m\]"
+  FG_DARKGREY="\[\e[07m\]"
 
   BG_BLACK="\[\e[40m\]"
   BG="\[\e[100m\]"
@@ -154,6 +155,33 @@ __powerline_mod() {
       fi
   }
 
+  virtual_env() {
+    if [[ -z "$VIRTUAL_ENV_DISABLE_PROMPT" ]] ; then
+      if [[ -n $VIRTUAL_ENV ]]; then
+        printf "$FG_DARKGREY(`basename $VIRTUAL_ENV`)$RESET"
+      fi
+    fi
+  }
+
+  short_cwd() {
+    local CWD=$(pwd)
+    local CWD_HOME=${CWD#$HOME}
+
+    if [[ x"$CWD" != x"$CWD_HOME" ]]; then
+        echo -n "~"
+        CWD=$CWD_HOME
+    fi 
+    if [[ $CWD == "/" ]]; then echo -n "/"; fi 
+
+    TMP_IFS=$IFS
+    IFS=$'\n'; for l in $(echo $CWD | tr "/" "\n"); do 
+      echo -n "/"
+      echo -n ${l:0:1}
+    done
+    IFS=$TMP_IFS
+    echo -n ${l:1}
+  }
+
   ps1() {
     # Check the exit code of the previous command and display different
     # colors in the prompt accordingly.
@@ -164,15 +192,16 @@ __powerline_mod() {
     fi
 
     # Get hostname (until first '.') unless one of the defaults
-    PROMPT_HOSTNAME=" ${HOSTNAME%%.*} "
+    PROMPT_HOSTNAME="${HOSTNAME%%.*}"
 
     # Add the Conda environment infor
     PS1="$BG_BLACK$FG_MAGENTA$(conda_env_info)$RESET"
     PS1+="$(jobs_info)"
-    PS1+="$BG_BLACK$FG_RED$(root_info)\u$RESET"
-    PS1+="$BG_BLACK$FG_YELLOW$PROMPT_HOSTNAME$RESET"
+    PS1+="$BG_BLACK$FG_RED$(root_info)$RESET"
+    PS1+="$BG_BLACK$FG_YELLOW$PROMPT_HOSTNAME$RESET:"
     # Add path to current working directory
-    PS1+="$BG_BLACK$FG_CYAN \w $RESET"
+    PS1+="$BG_BLACK$FG_CYAN$(short_cwd) $RESET"
+    PS1+="$BG_BLACK$(virtual_env)$RESET"
     PS1+="$BG_BLACK$FG_BLUE$(git_info)$RESET\n"
     PS1+="$BG_BLACK$FG_EXIT $PS_SYMBOL $RESET "
   }
