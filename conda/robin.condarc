@@ -1,0 +1,17 @@
+# installing a new environments add these packages by default
+create_default_packages:
+  - python
+  - pip
+  - ipython
+  - pytest
+
+# implies always using the --yes option whenever asked to proceed
+always_yes: True
+
+# change ps1 when using activate (default True)
+#changeps1: False
+
+channels:
+  - defaults
+  - https://conda.binstar.org/faircloth-lab
+  - https://conda.binstar.org/auto
